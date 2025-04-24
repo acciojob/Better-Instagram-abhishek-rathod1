@@ -1,22 +1,23 @@
-//your code here
-
-
-
-function dragstartHandler(e){
-	e.dataTransfer.setData("text",e.target.id);
-		
+function dragstartHandler(e) {
+  e.dataTransfer.setData("text/plain", e.target.id);
 }
 
 function dragoverHandler(e) {
-	e.preventDefault();
+  e.preventDefault(); // Allow drop
 }
 
 function dropHandler(e) {
-	e.preventDefault();
-	const draggedId = e.dataTransfer.getData("text");
-	const draggedEl = document.getElementById(draggedId);
-	const targetEl = e.target;
-	const data = e.dataTransfer.getData("text");
-	e.target.appendChild(document.getElementById(data));
-}
+  e.preventDefault();
+  const draggedId = e.dataTransfer.getData("text/plain");
+  const draggedImg = document.getElementById(draggedId);
 
+  const dropTarget = e.target.tagName === "IMG" ? e.target.parentElement : e.target;
+  const droppedImg = dropTarget.querySelector("img");
+
+  if (!draggedImg || !droppedImg || draggedImg === droppedImg) return;
+
+  // Swap the images
+  const draggedSrc = draggedImg.src;
+  draggedImg.src = droppedImg.src;
+  droppedImg.src = draggedSrc;
+}
