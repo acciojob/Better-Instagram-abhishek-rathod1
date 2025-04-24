@@ -1,6 +1,6 @@
 //your code here
 
-let dragDiv = null;
+
 
 function dragstartHandler(e){
 	e.dataTransfer.setData("text",e.target.id);
@@ -13,7 +13,15 @@ function dragoverHandler(e) {
 
 function dropHandler(e) {
 	e.preventDefault();
-	const data = e.dataTransfer.getData("text");
-	e.target.appendChild(document.getElementById(data));
+	const draggedId = e.dataTransfer.getData("text");
+	const draggedEl = document.getElementById(draggedId);
+	const targetEl = e.target;
+	
+	if(targetEl.classList.contains('image')&&draggedEl !==targetEl){
+		const parent = targetEl.parentNode;
+		const draggedNext = draggedEl.nextSibling === targetEl ? draggedEl : draggedEl.nextSibling;
+		parent.insertBefore(draggedEl, targetEl);
+		parent.insertBefore(targetEl, draggedNext);
+	}
 }
 
