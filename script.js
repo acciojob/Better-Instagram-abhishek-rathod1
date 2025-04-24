@@ -16,12 +16,7 @@ function dropHandler(e) {
 	const draggedId = e.dataTransfer.getData("text");
 	const draggedEl = document.getElementById(draggedId);
 	const targetEl = e.target;
-	
-	if(targetEl.classList.contains('image')&&draggedEl !==targetEl){
-		const parent = targetEl.parentNode;
-		const draggedNext = draggedEl.nextSibling === targetEl ? draggedEl : draggedEl.nextSibling;
-		parent.insertBefore(draggedEl, targetEl);
-		parent.insertBefore(targetEl, draggedNext);
-	}
+	const data = e.dataTransfer.getData("text");
+	e.target.appendChild(document.getElementById(data));
 }
 
